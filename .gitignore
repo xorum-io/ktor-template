@@ -1,0 +1,6 @@
+.idea/
+.gradle/
+build/
+firebase-adminsdk.json
+*.DS_Store
+local.properties

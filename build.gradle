@@ -1,0 +1,72 @@
+buildscript {
+    ext.kotlin_version = '1.4.20'
+    ext.ktor_version = '1.4.1'
+    ext.shadow_version = '2.0.4'
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+        classpath "com.github.jengelman.gradle.plugins:shadow:$shadow_version"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+apply plugin: 'kotlinx-serialization'
+
+group 'xorum.io'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+mainClassName = "io.ktor.server.netty.DevelopmentEngine"
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "io.ktor:ktor-auth:$ktor_version"
+    implementation "io.ktor:ktor-server-netty:$ktor_version"
+    implementation "io.ktor:ktor-serialization:$ktor_version"
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-serialization:$ktor_version"
+    implementation "io.ktor:ktor-client-logging:$ktor_version"
+    implementation "io.ktor:ktor-client-serialization-jvm:$ktor_version"
+    implementation "io.ktor:ktor-client-logging-jvm:$ktor_version"
+    implementation "io.ktor:ktor-client-okhttp:$ktor_version"
+    implementation 'io.sentry:sentry:3.1.0'
+    implementation "ch.qos.logback:logback-classic:1.2.3"
+    implementation "com.google.firebase:firebase-admin:7.1.0"
+    implementation 'org.jetbrains.exposed:exposed:0.17.7'
+    implementation 'org.postgresql:postgresql:42.2.14'
+    implementation 'com.zaxxer:HikariCP:3.4.5'
+    implementation 'org.junit.jupiter:junit-jupiter:5.6.2'
+    implementation "org.mockito.kotlin:mockito-kotlin:3.1.0"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+shadowJar {
+    archiveFileName = 'app.jar'
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
