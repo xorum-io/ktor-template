@@ -10,9 +10,13 @@ import io.ktor.utils.io.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
-class HttpClientFactory {
+object HttpClientFactory {
 
-    fun create(link: String): HttpClient = HttpClient {
+    private val cachedClients = mutableMapOf<String, HttpClient>()
+
+    fun getClient(link: String) = (cachedClients[link] ?: createClient(link)).also { cachedClients[link] = it }
+
+    private fun createClient(link: String): HttpClient = HttpClient {
         expectSuccess = true
         defaultRequest {
             url {

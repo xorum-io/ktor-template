@@ -6,7 +6,7 @@ import util.HttpClientFactory
 import util.request
 
 class JokesRepository(
-    private val httpClient: HttpClient = HttpClientFactory().create("official-joke-api.appspot.com")
+    private val httpClient: HttpClient = HttpClientFactory.getClient("official-joke-api.appspot.com")
 ) {
 
     suspend fun getRandomJoke() = request {
