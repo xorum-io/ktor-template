@@ -1,5 +1,13 @@
 ## Ktor template
 
+This is a template for the development of backend applications using [Ktor framework](https://ktor.io/) powered by [Kotlin programming language](https://kotlinlang.org/).
+
+[Exposed ORM framework](https://github.com/JetBrains/Exposed) is used to wrap the [PostgreSQL](https://www.postgresql.org/) database connected by [HikariCP JDBC pool](https://github.com/brettwooldridge/HikariCP).
+
+[Firebase Auth](https://firebase.google.com/products/auth) helps to authenticate users for each request by passing the bearer token generated on the client side by one of Firebase client SDKs.
+
+Find more details on this template in [our Medium blog](https://medium.com/xorum-io/battle-tested-template-project-for-backend-with-kotlin-and-ktor-c655a2e276c2?sk=004c7d55091c004a314686b48d606df6).
+
 ## To do
 
 Once cloned do the following to adapt template to your needs.
