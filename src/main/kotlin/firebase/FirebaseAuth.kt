@@ -4,6 +4,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseToken
+import features.auth.interactors.CreateUserAccountInteractor
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.auth.Authentication
@@ -90,6 +91,7 @@ class FirebaseAuthenticationProvider internal constructor(
 fun Authentication.Configuration.firebase(
     name: String? = null,
     firebaseApp: FirebaseApp,
+    createUserAccountInteractor: CreateUserAccountInteractor = CreateUserAccountInteractor(),
     configure: FirebaseAuthenticationProvider.Configuration.() -> Unit
 ) {
     val provider = FirebaseAuthenticationProvider.Configuration(name, firebaseApp).apply(configure).build()
@@ -109,6 +111,7 @@ fun Authentication.Configuration.firebase(
         }
 
         if (token == testToken) {
+            createUserAccountInteractor.execute(testUserId)
             context.principal(FirebasePrincipal(testUserId))
             return@intercept
         }
